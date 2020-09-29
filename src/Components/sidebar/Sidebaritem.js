@@ -35,7 +35,7 @@ class Sidebaritem extends Component
                 </div>
                 <div className="sidebaritem__right">
                     {
-                        this.props.count === '0' ? null :
+                        // this.props.count === '0' ? null :
                         <p>{this.props.count}</p>
                     }
                     
