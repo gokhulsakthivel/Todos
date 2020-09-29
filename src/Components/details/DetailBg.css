@@ -1,0 +1,13 @@
+.detailbg{
+    height: 35vh;
+    background-color: black;
+    background-image: url(../../Assests/Images/view-of-elephant.jpg);
+    background-size: cover;
+}
+
+.detailbg > p{
+    color: white;
+    font-size: 10vh;
+    padding:0px 20px;
+    padding-top: 15vh;    
+}
