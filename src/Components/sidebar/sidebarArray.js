@@ -6,21 +6,21 @@ let sidebarArray = [
         icon : 'WbSunnySharpIcon',
         listName : 'My Day',
         list : [],
-        listCount : '0',
+        listCount : 0
     },
     {
         id : 2,
         icon : 'HomeSharpIcon',
         listName : 'To-Do',
-        list : [],
-        listCount : '0',
+        list : ['a','c'],
+        listCount : 0
     },
     {
         id : 3,
         icon : 'LocalGroceryStoreSharpIcon',
         listName : 'Grocery',
         list : [],
-        listCount : '0',
+        listCount : 0
         
     },
     {
@@ -28,7 +28,7 @@ let sidebarArray = [
         icon : 'ListSharpIcon',
         listName : 'Others',
         list : [],
-        listCount : '0',
+        listCount : 0
     }
 ];
 

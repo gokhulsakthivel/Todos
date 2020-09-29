@@ -28,7 +28,7 @@ class Sidebarlist extends Component
     }
 
     addElementHandler = () =>{
-        alert("entered")
+        //alert("entered")
         let tempArray = this.state.array.slice();
         let listName = document.getElementById("sidebar__input").value;
         // let listName = event.targetr.value;
@@ -39,8 +39,8 @@ class Sidebarlist extends Component
             id : tempArray.length+1,
             icon : 'ListSharpIcon',
             listName : listName,
-            listCount : '0',
-            list : []
+            list : [],
+            listCount : 0
         });
         if(listName !== ''){
         // console.log(tempArray)}
@@ -48,29 +48,11 @@ class Sidebarlist extends Component
             array : tempArray
         })
         }
-        this.onBlurInputHandler()
+        this.changeInputValue();
+        this.setState({
+            styl:{display:'none'}
+        })
     }
-
-       
-    changeStyleHandler = () =>{
-        const disp = this.state.styl.display;
-        
-        if(disp === 'none'){
-            this.setState({
-                styl:{}
-            })
-        }
-        else{
-            this.setState({
-                styl:{display:'none'}
-            })
-        }
-    }
-
-    // callFuntctionHandler = () =>{
-    //     this.addElementHandler();
-    //     this.changeStyleHandler();
-    // }
 
     onFocusInputHandler = () =>{
         this.changeInputValue();
@@ -79,11 +61,14 @@ class Sidebarlist extends Component
         })
     }
 
-    onBlurInputHandler = () =>{
-        this.changeInputValue();
-        this.setState({
-            styl:{display:'none'}
-        })
+    onBlurInputHandler = (event) =>{
+        if(event.target.value === '')
+        {
+            this.changeInputValue();
+            this.setState({
+                styl:{display:'none'}
+            })
+        }
     }
 
     changeInputValue = () => {
@@ -106,7 +91,8 @@ class Sidebarlist extends Component
                             key={item.id} 
                             name={item.listName} 
                             icon={item.icon} 
-                            count={item.listCount}
+                            count={item.list.length}
+                            
                     />
         })
         return(
@@ -125,7 +111,8 @@ class Sidebarlist extends Component
                                 type="text" 
                                 id="sidebar__input" 
                                 onFocus={this.onFocusInputHandler} 
-                                // onBlur={this.onBlurInputHandler}
+                                onBlur={(event) => this.onBlurInputHandler(event)}
+                                onKeyPress={this.add}
                                 onChange={(event) => this.storeListName(event)}  
                                 value={this.state.val}  
                                 placeholder="Unanmed List"

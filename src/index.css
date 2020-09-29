@@ -13,3 +13,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+  html {
+    transform: rotate(-90deg);
+    
+  }
+}
