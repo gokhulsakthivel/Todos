@@ -3,11 +3,28 @@
     background-color: black;
     background-image: url(../../Assests/Images/view-of-elephant.jpg);
     background-size: cover;
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
 }
 
-.detailbg > p{
+.detailbg__banner > p{
     color: white;
     font-size: 10vh;
+    flex-basis: 80%;
     padding:0px 20px;
-    padding-top: 15vh;    
+    /* padding-top: 15vh;     */
+}
+
+.detailbg__banner{
+    display: flex;
+    z-index: 2;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 15vh;
+}
+
+.detailbg__banner > .MuiSvgIcon-root{
+    color:white;
+    flex-basis: 20%;
+    font-size: 5vh;
 }

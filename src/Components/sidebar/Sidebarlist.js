@@ -2,7 +2,8 @@ import React ,{Component} from 'react'
 // import Sidebar from './Sidebar'
 import Sidebaritem from './Sidebaritem'
 import sidebarArray from './sidebarArray'
-
+import {db} from '../../Services/firebase'
+// import './sidebarlistfunctions'
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 // import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
 // import AddCircleSharpIcon from '@material-ui/icons/AddCircleSharp';
@@ -19,6 +20,32 @@ class Sidebarlist extends Component
         styl : {display:'none'},
         val : "NewList",
         list_Name : ""
+    }
+
+    
+    componentDidMount()
+    {
+        console.log("Mounted")
+        db.collection("users")
+            .get()
+            .then( snapshot => {
+                snapshot.docs.map((userDoc) =>{
+                    // console.log(userDoc['id'])
+                    db.collection("users").doc(userDoc['id']).collection("listNames")
+                        .get()
+                        .then( snapshot =>{
+                            let tempArray = []
+                            snapshot.docs.map((listnamesDoc) => {
+                                tempArray.push(listnamesDoc.data())
+                            })
+                            this.setState({
+                                array:tempArray
+                            })
+                        })
+                        .catch(error =>console.log(error))
+                })
+            })
+            .catch(error => console.log(error))
     }
 
     storeListName = (event) =>{
@@ -44,6 +71,14 @@ class Sidebarlist extends Component
         });
         if(listName !== ''){
         // console.log(tempArray)}
+        db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames")
+            .add({
+                id : tempArray.length,
+                icon : 'ListSharpIcon',
+                listName : listName,
+                list : [],
+                listCount : 0
+            })
         this.setState({
             array : tempArray
         })
