@@ -20,8 +20,15 @@ class Sidebaritem extends Component
         const style = {
             color : 'rgb('+r+','+g+','+b+')'
         }
+        var act = {}; 
+        if(this.props.active) {
+            act = {
+                backgroundColor : "lightgray"
+            }
+        }
+        
         return(
-            <div className="Sidebaritem">
+            <div className="Sidebaritem" style={act} onClick={this.props.activeFunction}>
                 <div className="sidebaritem__left">
                     {
                         this.props.icon === 'WbSunnySharpIcon' ? <WbSunnySharpIcon style={style}/> :

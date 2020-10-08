@@ -2,6 +2,7 @@
 
 let sidebarArray = [
     {
+        active : true,
         id : 1,
         icon : 'WbSunnySharpIcon',
         listName : 'My Day',
@@ -9,6 +10,7 @@ let sidebarArray = [
         listCount : 0
     },
     {
+        active : false,
         id : 2,
         icon : 'HomeSharpIcon',
         listName : 'To-Do',
@@ -16,6 +18,7 @@ let sidebarArray = [
         listCount : 0
     },
     {
+        active : false,
         id : 3,
         icon : 'LocalGroceryStoreSharpIcon',
         listName : 'Grocery',
@@ -24,6 +27,7 @@ let sidebarArray = [
         
     },
     {
+        active : false,
         id : 4,
         icon : 'ListSharpIcon',
         listName : 'Others',

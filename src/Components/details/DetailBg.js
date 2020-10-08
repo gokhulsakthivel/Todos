@@ -12,8 +12,6 @@ class DetailBg extends Component{
                     <p>To-Do</p>
                     <StarHalfIcon/>
                 </div>
-                <div className="">
-                </div>
             </div>
         )
     }

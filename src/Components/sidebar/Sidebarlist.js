@@ -21,11 +21,14 @@ class Sidebarlist extends Component
         val : "NewList",
         list_Name : ""
     }
-
     
     componentDidMount()
     {
-        console.log("Mounted")
+        console.log("Mounted");
+        this.setOfflineArray();
+    }
+
+    setOfflineArray = () =>{
         db.collection("users")
             .get()
             .then( snapshot => {
@@ -41,9 +44,11 @@ class Sidebarlist extends Component
                             this.setState({
                                 array:tempArray
                             })
+                            // return null;
                         })
                         .catch(error =>console.log(error))
                 })
+                // return null;
             })
             .catch(error => console.log(error))
     }
@@ -54,6 +59,39 @@ class Sidebarlist extends Component
         })
     }
 
+
+    changeActiveState = (id) =>{
+        // var tempArray = this.state.array;
+        // tempArray.map((item) => {
+        //     // console.log(item.listName,id);
+        //     (item.id === id) ? 
+        //     item.active = true : item.active = false;          
+        // })
+
+        db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").get()
+            .then(snapshot => {
+                snapshot.docs.map((value) => {
+                    // console.log(value.data().active,value.data().listName);
+                    console.log(value.id);
+                    value.data().id === id ?
+                    db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").doc(value.id).update({
+                        active : true
+                    }):
+                    db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").doc(value.id).update({
+                        active : false
+                    });
+                    // value.update
+                    return null;
+                })
+        })
+        this.setOfflineArray();
+        // this.setState({
+        //     array : tempArray
+        // })
+
+    }
+
+
     addElementHandler = () =>{
         //alert("entered")
         let tempArray = this.state.array.slice();
@@ -61,8 +99,9 @@ class Sidebarlist extends Component
         // let listName = event.targetr.value;
         
         document.getElementById("sidebar__input").value = ''
-        console.log(listName)
+        // console.log(listName)
         tempArray.push({
+            active : true,
             id : tempArray.length+1,
             icon : 'ListSharpIcon',
             listName : listName,
@@ -73,6 +112,7 @@ class Sidebarlist extends Component
         // console.log(tempArray)}
         db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames")
             .add({
+                active : true,
                 id : tempArray.length,
                 icon : 'ListSharpIcon',
                 listName : listName,
@@ -87,6 +127,9 @@ class Sidebarlist extends Component
         this.setState({
             styl:{display:'none'}
         })
+        this.changeActiveState(tempArray.length);
+        // this.props.changeFunction();
+        
     }
 
     onFocusInputHandler = () =>{
@@ -118,16 +161,23 @@ class Sidebarlist extends Component
         })
     }
 
+
+    
+
+
+
     render()
     {
 
         let items = this.state.array.map((item) => {
+            //console.log(item);
             return <Sidebaritem 
                             key={item.id} 
                             name={item.listName} 
                             icon={item.icon} 
                             count={item.list.length}
-                            
+                            active={item.active}
+                            activeFunction={() => this.changeActiveState(item.id)}
                     />
         })
         return(
