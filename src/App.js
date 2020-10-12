@@ -89,17 +89,20 @@ class App extends Component {
             })
         })
         .catch(error => console.log(error))
-
-        
   }
+
+
+ 
 
   render(){
     
+    
+
     return (
       <div className="App">
         
         {/* <Sidebar array={this.state.array} changeFunction={this.setOfflineArray}/> */}
-        <Sidebar array={this.state.array} changeFunction={this.setOfflineArray}>
+        <Sidebar theme={this.state.isLightTheme} array={this.state.array} changeFunction={this.setOfflineArray}>
           <div className="sidebar__intro">
             <EmojiEmotionsSharpIcon/>
             <p>Hi {this.state.name}</p>

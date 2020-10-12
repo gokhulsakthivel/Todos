@@ -11,17 +11,17 @@
     display: flex;
     justify-content: flex-start;
     padding: 10px 0px;
-    align-items: center;
+    /* align-items: center; */
     width: 100%;
     /* flex-direction: row; */
 }
 
 .detailitem__check > p{
-    flex-basis: 95%;
+    flex-basis: 90%;
 }
 
 .detailitem__check > .MuiSvgIcon-root{
-    flex-basis: 5%;
+    flex-basis: 10%;
 }
 
 .detailItem__delete > .MuiSvgIcon-root{

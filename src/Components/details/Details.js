@@ -6,6 +6,7 @@ import DetailItem from './DetailItem'
 import './Details.css'
 import BookSharpIcon from '@material-ui/icons/BookSharp';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
+import MenuIcon from '@material-ui/icons/Menu';
 
 class Detail extends Component{
 
@@ -19,34 +20,22 @@ class Detail extends Component{
     {
         // console.log("Mounted", this.props.array, "Details");
     }
-
-    // setOfflineArray = () =>{
-    //     db.collection("users")
-    //         .get()
-    //         .then( snapshot => {
-    //             snapshot.docs.map((userDoc) =>{
-    //                 // console.log(userDoc['id'])
-    //                 db.collection("users").doc(userDoc['id']).collection("listNames")
-    //                     .get()
-    //                     .then( snapshot =>{
-    //                         let tempArray = []
-    //                         snapshot.docs.map((listnamesDoc) => {
-    //                             tempArray.push(listnamesDoc.data())
-    //                         })
-    //                         this.setState({
-    //                             array:tempArray
-    //                         })
-    //                         // return null;
-    //                     })
-    //                     .catch(error =>console.log(error))
-    //             })
-    //             // return null;
-    //         })
-    //         .catch(error => console.log(error))
-    // }
-
-    
-
+  
+    displaySidebar = () =>{
+        let list = document.getElementsByClassName("sidebar");
+        let ham = document.getElementsByClassName("menuIcon");
+        if(list[0].style.display === 'block'){
+            list[0].style.display = 'none';
+            ham[0].style.top = '10px';
+            ham[0].style.bottom = '10px';
+        }
+        else
+        {
+            list[0].style.display = 'block';
+            ham[0].style.top = '10px';
+            ham[0].style.bottom = '10px';
+        }
+    }
 
     render()
     {
@@ -70,6 +59,7 @@ class Detail extends Component{
 
         return(
             <div className="details" >
+                <MenuIcon className="menuIcon" onClick={this.displaySidebar}/>
                 <div >
                     <DetailBg setTheme={this.props.setTheme} theme={this.props.theme} text={title}/>
                 </div>  

@@ -24,6 +24,20 @@
     flex-basis: 30%;
 }
 
+.sidebar::-webkit-scrollbar{
+    display: none;
+}
+
+
+.menuIcon
+{
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+}
+
 .sidebar{
     width: 25%;
     min-width: 350px;
@@ -33,6 +47,29 @@
     /* box-shadow: 0px 1px rgba(0, 0, 0, 0.1) */
 }
 
-.sidebar::-webkit-scrollbar{
-    display: none;
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .sidebar {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(15px); 
+    }
+  }
+
+@media screen and (max-width: 479px) {
+    /* start of phone styles */
+    .sidebar{
+        display: none;
+        position: absolute;
+        /* background: rgba(255,255,255,0.8); */
+        width: 75%;
+        min-width: 200px;
+    }
+
+    .menuIcon{
+        display: block;
+    }
+
+    .sidebarDisplay{
+        display: block;
+        
+    }
 }
