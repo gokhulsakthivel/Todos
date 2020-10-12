@@ -1,7 +1,7 @@
 import React ,{Component} from 'react'
 // import Sidebar from './Sidebar'
 import Sidebaritem from './Sidebaritem'
-import sidebarArray from './sidebarArray'
+// import sidebarArray from './sidebarArray'
 import {db} from '../../Services/firebase'
 // import './sidebarlistfunctions'
 import AddSharpIcon from '@material-ui/icons/AddSharp';
@@ -16,42 +16,43 @@ class Sidebarlist extends Component
 {
 
     state = {
-        array : sidebarArray,
+        // array : this.props.array,
         styl : {display:'none'},
         val : "NewList",
-        list_Name : ""
+        list_Name : "",
+        // setFunction : this.props.setFunction.bind(this) 
     }
     
     componentDidMount()
     {
-        console.log("Mounted");
-        this.setOfflineArray();
+        console.log(this.props.array,"Sidebarlist");
+        this.props.setFunction();
     }
 
-    setOfflineArray = () =>{
-        db.collection("users")
-            .get()
-            .then( snapshot => {
-                snapshot.docs.map((userDoc) =>{
-                    // console.log(userDoc['id'])
-                    db.collection("users").doc(userDoc['id']).collection("listNames")
-                        .get()
-                        .then( snapshot =>{
-                            let tempArray = []
-                            snapshot.docs.map((listnamesDoc) => {
-                                tempArray.push(listnamesDoc.data())
-                            })
-                            this.setState({
-                                array:tempArray
-                            })
-                            // return null;
-                        })
-                        .catch(error =>console.log(error))
-                })
-                // return null;
-            })
-            .catch(error => console.log(error))
-    }
+    // setOfflineArray = () =>{
+    //     db.collection("users")
+    //         .get()
+    //         .then( snapshot => {
+    //             snapshot.docs.map((userDoc) =>{
+    //                 // console.log(userDoc['id'])
+    //                 db.collection("users").doc(userDoc['id']).collection("listNames")
+    //                     .get()
+    //                     .then( snapshot =>{
+    //                         let tempArray = []
+    //                         snapshot.docs.map((listnamesDoc) => {
+    //                             tempArray.push(listnamesDoc.data())
+    //                         })
+    //                         this.setState({
+    //                             array:tempArray
+    //                         })
+    //                         // return null;
+    //                     })
+    //                     .catch(error =>console.log(error))
+    //             })
+    //             // return null;
+    //         })
+    //         .catch(error => console.log(error))
+    // }
 
     storeListName = (event) =>{
         this.setState({
@@ -84,17 +85,18 @@ class Sidebarlist extends Component
                     return null;
                 })
         })
-        this.setOfflineArray();
-        // this.setState({
-        //     array : tempArray
-        // })
+        this.props.setFunction();
+        // console.log(this.props.array)
+        this.setState({
+            array : this.props.array
+        })
 
     }
 
 
     addElementHandler = () =>{
         //alert("entered")
-        let tempArray = this.state.array.slice();
+        let tempArray = this.props.array.slice();
         let listName = document.getElementById("sidebar__input").value;
         // let listName = event.targetr.value;
         
@@ -169,7 +171,18 @@ class Sidebarlist extends Component
     render()
     {
 
-        let items = this.state.array.map((item) => {
+        let items = this.props.array.map((item) => {
+            //console.log(item);
+            return <Sidebaritem 
+                            key={item.id} 
+                            name={item.listName} 
+                            icon={item.icon} 
+                            count={item.list.length}
+                            active={item.active}
+                            activeFunction={() => this.changeActiveState(item.id)}
+                    />
+        })
+        let details = this.props.array.map((item) => {
             //console.log(item);
             return <Sidebaritem 
                             key={item.id} 

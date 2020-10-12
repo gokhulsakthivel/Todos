@@ -1,3 +1,46 @@
 .details{
     width: 75%;
+    min-width: calc(100% - 251px);
+}
+
+.details__newList{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 0px;
+    margin: 5px 0px;
+    bottom: 0px;
+    /* position: absolute; */
+    /* width: 75%; */
+    /* min-width: calc(100% - 250px); */
+    /* background-color: lightgray; */
+}
+
+.details__add{
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 0px;
+    align-items: center;
+    width: 100%;
+    /* margin: 5px; */
+    cursor: pointer;
+}
+
+.details__add > input{
+    outline: none;
+    font-size: 14px;
+    border:none;
+    width: 100%;
+    flex-basis: 90%;
+    padding: 5px 0px;
+}
+
+.details__add > .MuiSvgIcon-root{
+    flex-basis: 5%;
+}
+
+.details__submitIcon > .MuiSvgIcon-root{
+    cursor: pointer;
+    margin-right: 5px;
+    /* flex-basis: 5%; */
 }

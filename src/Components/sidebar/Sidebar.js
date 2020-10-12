@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Children, Component } from 'react'
 
 import {db} from '../../Services/firebase'
 import Sidebarlist from './Sidebarlist'
@@ -14,34 +14,15 @@ class Sidebar extends Component
     }
 
     componentDidMount(){
-        var tempName = "";
-        db.collection("users").doc("iNIR1xqLjNNqpzMkuRJO")
-            .get()
-            .then(snapshot => {
-                tempName = (snapshot.data().Name);
-                console.log(tempName)
-                if(tempName !== ""){
-                    this.setState({
-                        name : tempName
-                    });
-                }
-                
-            })
         this.props.changeFunction();
     }
 
     render()
     {
+        // console.log(this.props.children)
         return(
             <div className="sidebar">
-               <div className="sidebar__intro">
-                   <EmojiEmotionsSharpIcon/>
-                   {/* <p>Hi Buddy</p>    */}
-                    <p>Hi {this.state.name}</p>
-                </div>
-                <div className="sidebar__list">
-                    <Sidebarlist array={this.props.array} changeFunction={this.props.changeFunction}/>
-                </div>
+                {this.props.children}
             </div>
         )
     }
