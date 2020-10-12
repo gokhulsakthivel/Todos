@@ -10,6 +10,34 @@ import './Sidebaritem.css'
 
 class Sidebaritem extends Component
 {
+
+
+    hoverOnEffect = (e) =>{
+        if(!this.props.active && e.target.className === "Sidebaritem") {
+            if(!this.props.theme){
+                e.target.style.background = 'lightgray';
+                // document.getElementsByClassName("Sidebaritem")[0].style.background = 'lightgray';
+            }
+            else{
+                e.target.style.background = 'rgb(89, 89, 89)';
+                // document.getElementsByClassName("Sidebaritem")[3].style.background = 'rgb(89, 89, 89)';
+            }
+        }
+    }
+    
+    hoverOffEffect = (e) =>{
+        if(!this.props.active) {
+            if(!this.props.theme){
+                e.target.style.background = 'none'; 
+                document.getElementsByClassName("Sidebaritem")[this.props.index].style.backgroundColor = "none";
+            }
+            else{
+                e.target.style.background = 'none';
+                document.getElementsByClassName("Sidebaritem")[this.props.index].style.backgroundColor = "none";
+            }
+        }
+    }
+
     render()
     {
         // iconName = this
@@ -22,13 +50,28 @@ class Sidebaritem extends Component
         }
         var act = {}; 
         if(this.props.active) {
-            act = {
-                backgroundColor : "lightgray"
+            if(!this.props.theme){
+                act = {
+                    backgroundColor : "lightgray",    
+                }
             }
+            else{
+                act = {
+                    backgroundColor : " rgb(89, 89, 89)",    
+                }
+            }
+            
         }
+
+        // console.log(this.props.index,"sidebarItem");
         
         return(
-            <div className="Sidebaritem" style={act} onClick={this.props.activeFunction}>
+            <div className="Sidebaritem" 
+                onMouseEnter={this.hoverOnEffect}  
+                onMouseLeave={this.hoverOffEffect}      
+                style={act} 
+                onClick={this.props.activeFunction}
+            >
                 <div className="sidebaritem__left">
                     {
                         this.props.icon === 'WbSunnySharpIcon' ? <WbSunnySharpIcon style={style}/> :

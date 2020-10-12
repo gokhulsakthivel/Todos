@@ -19,40 +19,14 @@ class Sidebarlist extends Component
         // array : this.props.array,
         styl : {display:'none'},
         val : "NewList",
-        list_Name : "",
-        // setFunction : this.props.setFunction.bind(this) 
+        list_Name : "", 
     }
     
     componentDidMount()
     {
-        console.log(this.props.array,"Sidebarlist");
-        this.props.setFunction();
+        
     }
 
-    // setOfflineArray = () =>{
-    //     db.collection("users")
-    //         .get()
-    //         .then( snapshot => {
-    //             snapshot.docs.map((userDoc) =>{
-    //                 // console.log(userDoc['id'])
-    //                 db.collection("users").doc(userDoc['id']).collection("listNames")
-    //                     .get()
-    //                     .then( snapshot =>{
-    //                         let tempArray = []
-    //                         snapshot.docs.map((listnamesDoc) => {
-    //                             tempArray.push(listnamesDoc.data())
-    //                         })
-    //                         this.setState({
-    //                             array:tempArray
-    //                         })
-    //                         // return null;
-    //                     })
-    //                     .catch(error =>console.log(error))
-    //             })
-    //             // return null;
-    //         })
-    //         .catch(error => console.log(error))
-    // }
 
     storeListName = (event) =>{
         this.setState({
@@ -62,18 +36,12 @@ class Sidebarlist extends Component
 
 
     changeActiveState = (id) =>{
-        // var tempArray = this.state.array;
-        // tempArray.map((item) => {
-        //     // console.log(item.listName,id);
-        //     (item.id === id) ? 
-        //     item.active = true : item.active = false;          
-        // })
 
         db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").get()
             .then(snapshot => {
                 snapshot.docs.map((value) => {
                     // console.log(value.data().active,value.data().listName);
-                    console.log(value.id);
+                    // console.log(value.id);
                     value.data().id === id ?
                     db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").doc(value.id).update({
                         active : true
@@ -108,6 +76,7 @@ class Sidebarlist extends Component
             icon : 'ListSharpIcon',
             listName : listName,
             list : [],
+            listCheck:[],
             listCount : 0
         });
         if(listName !== ''){
@@ -154,7 +123,6 @@ class Sidebarlist extends Component
     changeInputValue = () => {
 
         this.state.val === 'NewList' ?
-        // console.log('focus'):console.log('blur')
         this.setState({
             val : ""
         }) :
@@ -171,9 +139,11 @@ class Sidebarlist extends Component
     render()
     {
 
-        let items = this.props.array.map((item) => {
+        let items = this.props.array.map((item,index) => {
             //console.log(item);
             return <Sidebaritem 
+                            index = {index}
+                            theme={this.props.theme}
                             key={item.id} 
                             name={item.listName} 
                             icon={item.icon} 
@@ -182,25 +152,10 @@ class Sidebarlist extends Component
                             activeFunction={() => this.changeActiveState(item.id)}
                     />
         })
-        let details = this.props.array.map((item) => {
-            //console.log(item);
-            return <Sidebaritem 
-                            key={item.id} 
-                            name={item.listName} 
-                            icon={item.icon} 
-                            count={item.list.length}
-                            active={item.active}
-                            activeFunction={() => this.changeActiveState(item.id)}
-                    />
-        })
+        
         return(
             <div className="sidebarlist">
                 {items}
-
-                {/* <div className="sidebar__addInput" style={this.state.styl}  >
-                        <input type="text" id="sidebar__input" />
-                        <AddCircleSharpIcon onClick={this.callFuntctionHandler}/>  
-                </div> */}
 
                 <div className="sidebar__newList">
                     <div className="sidebar__add" >

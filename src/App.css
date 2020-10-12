@@ -2,3 +2,20 @@
     display: flex;
     /* justify-content: space-between; */
 }
+
+.bodyDarkTheme{
+    color: lightgray;
+    background-color: rgb(44, 44, 44);
+  }
+.inputDarkTheme{
+    color: lightgray;
+    background-color: rgb(44, 44, 44);
+    /* background-color: rgb(89, 89, 89); */
+} 
+
+.bodyLightTheme{
+    color: rgb(50, 50, 50);
+  }
+.inputLightTheme{
+    color: rgb(50, 50, 50);
+  }

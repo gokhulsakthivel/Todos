@@ -9,8 +9,8 @@ class DetailBg extends Component{
         return(
             <div className="detailbg">
                 <div className="detailbg__banner">
-                    <p>To-Do</p>
-                    <StarHalfIcon/>
+                    <p>{this.props.text}</p>
+                    <StarHalfIcon onClick={this.props.setTheme}/>
                 </div>
             </div>
         )

@@ -1,0 +1,31 @@
+.detailItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 0px;
+    margin: 5px 0px;
+    bottom: 0px;
+}
+
+.detailitem__check {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 0px;
+    align-items: center;
+    width: 100%;
+    /* flex-direction: row; */
+}
+
+.detailitem__check > p{
+    flex-basis: 95%;
+}
+
+.detailitem__check > .MuiSvgIcon-root{
+    flex-basis: 5%;
+}
+
+.detailItem__delete > .MuiSvgIcon-root{
+    cursor: pointer;
+    margin-right: 5px;
+    /* flex-basis: 5%; */
+}

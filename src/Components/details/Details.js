@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import sidebarArray from '../sidebar/sidebarArray'
-import {db} from '../../Services/firebase'
+// import {db} from '../../Services/firebase'
 import DetailBg from './DetailBg'
 import DetailItem from './DetailItem'
 import './Details.css'
@@ -20,30 +20,30 @@ class Detail extends Component{
         // console.log("Mounted", this.props.array, "Details");
     }
 
-    setOfflineArray = () =>{
-        db.collection("users")
-            .get()
-            .then( snapshot => {
-                snapshot.docs.map((userDoc) =>{
-                    // console.log(userDoc['id'])
-                    db.collection("users").doc(userDoc['id']).collection("listNames")
-                        .get()
-                        .then( snapshot =>{
-                            let tempArray = []
-                            snapshot.docs.map((listnamesDoc) => {
-                                tempArray.push(listnamesDoc.data())
-                            })
-                            this.setState({
-                                array:tempArray
-                            })
-                            // return null;
-                        })
-                        .catch(error =>console.log(error))
-                })
-                // return null;
-            })
-            .catch(error => console.log(error))
-    }
+    // setOfflineArray = () =>{
+    //     db.collection("users")
+    //         .get()
+    //         .then( snapshot => {
+    //             snapshot.docs.map((userDoc) =>{
+    //                 // console.log(userDoc['id'])
+    //                 db.collection("users").doc(userDoc['id']).collection("listNames")
+    //                     .get()
+    //                     .then( snapshot =>{
+    //                         let tempArray = []
+    //                         snapshot.docs.map((listnamesDoc) => {
+    //                             tempArray.push(listnamesDoc.data())
+    //                         })
+    //                         this.setState({
+    //                             array:tempArray
+    //                         })
+    //                         // return null;
+    //                     })
+    //                     .catch(error =>console.log(error))
+    //             })
+    //             // return null;
+    //         })
+    //         .catch(error => console.log(error))
+    // }
 
     
 
@@ -53,21 +53,25 @@ class Detail extends Component{
         // this.props.changeFunction();
         let list = this.props.array.map((items =>{
             // console.log(items);
+            var index = 0;
             if(items.active){
                 return items.list.map((item)=>{
-                    // console.log(item);
-                    
-                    return <DetailItem texts={item}/>
+                    index += 1;
+                    return <DetailItem texts={item} key={index} isChecked={items.listCheck[index-1]}/>
                 })
             }
         }))
 
-
+        let title = this.props.array.map(items => {
+            if(items.active){
+                return items.listName;
+            }
+        }) 
 
         return(
             <div className="details" >
                 <div >
-                    <DetailBg/>
+                    <DetailBg setTheme={this.props.setTheme} theme={this.props.theme} text={title}/>
                 </div>  
                 {list}
                 <div className="details__newList">
