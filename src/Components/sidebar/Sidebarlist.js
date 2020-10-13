@@ -65,6 +65,7 @@ class Sidebarlist extends Component
     addElementHandler = () =>{
         //alert("entered")
         let tempArray = this.props.array.slice();
+        var setId = this.props.array[tempArray.length-1].id + 1;
         let listName = document.getElementById("sidebar__input").value;
         // let listName = event.targetr.value;
         
@@ -72,7 +73,7 @@ class Sidebarlist extends Component
         // console.log(listName)
         tempArray.push({
             active : true,
-            id : tempArray.length+1,
+            id : setId,
             icon : 'ListSharpIcon',
             listName : listName,
             list : [],
@@ -84,10 +85,11 @@ class Sidebarlist extends Component
         db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames")
             .add({
                 active : true,
-                id : tempArray.length,
+                id : setId,
                 icon : 'ListSharpIcon',
                 listName : listName,
                 list : [],
+                listCheck:[],
                 listCount : 0
             })
         this.setState({

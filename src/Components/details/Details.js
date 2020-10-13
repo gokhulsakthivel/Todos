@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import sidebarArray from '../sidebar/sidebarArray'
-// import {db} from '../../Services/firebase'
+import {db} from '../../Services/firebase'
 import DetailBg from './DetailBg'
 import DetailItem from './DetailItem'
 import './Details.css'
@@ -37,6 +37,52 @@ class Detail extends Component{
         }
     }
 
+    activeId = () =>{
+        this.props.array.map(items => {
+            if(items.active){
+                return items.id;
+            }
+        });
+    } 
+
+    addListTodos = () =>{
+        let activeId = 0;
+        this.props.array.map(items => {
+            if(items.active){
+                // console.log("Entered",items.id)
+                activeId = items.id-1;
+            }
+        });
+
+        var input = document.getElementById('details__input').value;
+        console.log(this.props.array[activeId],activeId)
+        var templist = this.props.array[activeId].list;
+        templist.push(input)
+        var templistCheck = this.props.array[activeId].listCheck;
+        templistCheck.push(false)
+        console.log(templistCheck,templist,input, this.props.array[activeId].listCheck, this.props.array[activeId].list);
+
+        db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").get()
+            .then(snapshot => {
+                snapshot.docs.map((value) => {
+                    
+                    // console.log(templistCheck,templist,input);
+                    // console.log(activeId,"id",value.data().id);
+                    value.data().id === activeId+1 ?
+                    db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").doc(value.id).update({
+                        list : templist,
+                        listCheck : templistCheck
+                    }):
+                    console.log("none");
+                    // value.update
+                    return null;
+                })
+        })
+        document.getElementById('details__input').value = "";
+        this.props.changeFunction();
+    }
+
+
     render()
     {
         // this.props.changeFunction();
@@ -68,8 +114,8 @@ class Detail extends Component{
                     <div className="details__add" >
                         <AddSharpIcon/>
                         <input 
-                                // type="text" 
-                                // id="details__input" 
+                                type="text" 
+                                id="details__input" 
                                 // onFocus={this.onFocusInputHandler} 
                                 // onBlur={(event) => this.onBlurInputHandler(event)}
                                 // onKeyPress={this.add}
@@ -80,7 +126,7 @@ class Detail extends Component{
                     </div>
                     <div className="details__submitIcon">
                         <BookSharpIcon  
-                                // onClick={this.addElementHandler} 
+                                onClick={this.addListTodos} 
                                 // style={this.state.styl}
                         />
                         {/* <BookmarkBorderSharpIcon/> */}
