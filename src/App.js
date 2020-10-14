@@ -12,7 +12,7 @@ class App extends Component {
   state = {
     array : [],
     name : "Buddy",
-    isLightTheme : true
+    isLightTheme : false
   }
 
   componentDidMount()
@@ -91,8 +91,7 @@ class App extends Component {
         .catch(error => console.log(error))
   }
 
-
- 
+  
 
   render(){
     
@@ -108,7 +107,7 @@ class App extends Component {
             <p>Hi {this.state.name}</p>
           </div>
           <div className="sidebar__list">
-              <Sidebarlist theme={this.state.isLightTheme} array={this.state.array} setFunction={this.setOfflineArray} changeFunction={this.setOfflineArray}/>
+              <Sidebarlist theme={this.state.isLightTheme} array={this.state.array} setFunction={this.setOfflineArray} deleteFunction={this.deleteList} changeFunction={this.setOfflineArray}/>
           </div> 
         </Sidebar>
 

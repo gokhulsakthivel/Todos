@@ -134,8 +134,45 @@ class Sidebarlist extends Component
     }
 
 
+    deleteList = (ind) =>{
+        db.collection("users")
+            .get()
+            .then( snapshot => {
+              var index = 0;
+                snapshot.docs.map((userDoc) =>{
+                    db.collection("users").doc(userDoc['id']).collection("listNames")
+                        .get()
+                        .then( snapshot =>{
+                            console.log(index,ind)
+                            // console.log(listnamesDoc.id ,ind,index)
+                            snapshot.docs.map((listnamesDoc) => {
+                              console.log(listnamesDoc.data().id,listnamesDoc.id ,ind,index)
+                            //   var str = 
+                              listnamesDoc.data().id === ind ?
+                              db.collection("users").doc(userDoc['id']).collection("listNames").doc(listnamesDoc.id)
+                                  .delete().then(function() {
+                                    console.log("Document successfully deleted!");
+                                }).catch(function(error) {
+                                    console.error("Error removing document: ", error);
+                                }):console.log()
+                            })
     
+                            index = index + 1;
+                        })
+                        .catch(error =>console.log(error))
+                })
+            })
+            .catch(error => console.log(error))
 
+            this.props.setFunction()
+      }
+
+      handleKeyPress = (event) => {
+        // console.log("neter");
+        if(event.key === 'Enter'){
+            this.addElementHandler()
+        }
+      }
 
 
     render()
@@ -147,10 +184,12 @@ class Sidebarlist extends Component
                             index = {index}
                             theme={this.props.theme}
                             key={item.id} 
+                            id={item.id} 
                             name={item.listName} 
                             icon={item.icon} 
                             count={item.list.length}
                             active={item.active}
+                            deleteFunction={() => this.deleteList(item.id)}
                             activeFunction={() => this.changeActiveState(item.id)}
                     />
         })
@@ -167,7 +206,8 @@ class Sidebarlist extends Component
                                 id="sidebar__input" 
                                 onFocus={this.onFocusInputHandler} 
                                 onBlur={(event) => this.onBlurInputHandler(event)}
-                                onKeyPress={this.add}
+                                // onKeyPress={this.add}
+                                onKeyPress={this.handleKeyPress}
                                 onChange={(event) => this.storeListName(event)}  
                                 value={this.state.val}  
                                 placeholder="Unanmed List"

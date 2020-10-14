@@ -24,7 +24,14 @@
 }
 .sidebaritem__right{
     flex-basis: 30%;
+    flex-direction: row-reverse;
+    display: flex;
+    justify-content: space-between;
     text-align: center;
+}
+
+.sidebaritem__right > .MuiSvgIcon-root{
+    cursor: pointer;
 }
 
 

@@ -5,6 +5,7 @@ import HomeSharpIcon from '@material-ui/icons/HomeSharp';
 import FitnessCenterSharpIcon from '@material-ui/icons/FitnessCenterSharp';
 import LocalGroceryStoreSharpIcon from '@material-ui/icons/LocalGroceryStoreSharp';
 import ListSharpIcon from '@material-ui/icons/ListSharp';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import './Sidebaritem.css'
 
@@ -87,6 +88,10 @@ class Sidebaritem extends Component
                     {
                         // this.props.count === '0' ? null :
                         <p>{this.props.count}</p>
+                    }
+                    {
+                        this.props.id > 3 ?
+                        <DeleteIcon onClick={this.props.deleteFunction}/>:null
                     }
                     
                 </div>

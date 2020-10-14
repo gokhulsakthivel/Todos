@@ -37,15 +37,8 @@ class Detail extends Component{
         }
     }
 
-    activeId = () =>{
-        this.props.array.map(items => {
-            if(items.active){
-                return items.id;
-            }
-        });
-    } 
 
-    addListTodos = () =>{
+    deleteCheckedlist = (indexOfListCheck) =>{
         let activeId = 0;
         this.props.array.map(items => {
             if(items.active){
@@ -54,21 +47,84 @@ class Detail extends Component{
             }
         });
 
+        db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").get()
+            .then(snapshot => {
+                snapshot.docs.map((value) => {
+
+                    var tempArray = value.data().listCheck;
+                    tempArray.splice(indexOfListCheck, 1)
+
+                    var tempArrayList = value.data().list;
+                    tempArrayList.splice(indexOfListCheck, 1)
+                    
+                    value.data().id === activeId+1 ?
+                    // console.log(value.data().id,value.data().listCheck[indexOfListCheck]),
+                    db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").doc(value.id).update({
+                        listCheck : tempArray,
+                        list : tempArrayList
+                    }):console.log();
+
+                    return null;
+                })
+        })
+
+        this.props.changeFunction();
+    }
+
+    changeCheckedlist = (indexOfListCheck) =>{
+        let activeId = 0;
+        this.props.array.map(items => {
+            if(items.active){
+                // console.log("Entered",items.id)
+                activeId = items.id-1;
+            }
+        });
+
+        db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").get()
+            .then(snapshot => {
+                snapshot.docs.map((value) => {
+
+                    var tempValue = !value.data().listCheck[indexOfListCheck];
+                    var tempArray = value.data().listCheck;
+                    tempArray[indexOfListCheck] = tempValue
+                    
+                    value.data().id === activeId+1 ?
+                    // console.log(value.data().id,value.data().listCheck[indexOfListCheck]),
+                    db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").doc(value.id).update({
+                        listCheck : tempArray,
+                    }):console.log();
+
+                    return null;
+                })
+        })
+        this.props.changeFunction();
+        // this.props.changeFunction();
+    }
+
+    addListTodos = () =>{
+        let activeId = 0;
+        this.props.array.map(items => {
+            if(items.active){
+                // console.log("Entered",items.id)
+                activeId = items.id;
+            }
+        });
+
         var input = document.getElementById('details__input').value;
-        console.log(this.props.array[activeId],activeId)
+
         var templist = this.props.array[activeId].list;
+        console.log(templist,activeId)
         templist.push(input)
         var templistCheck = this.props.array[activeId].listCheck;
         templistCheck.push(false)
-        console.log(templistCheck,templist,input, this.props.array[activeId].listCheck, this.props.array[activeId].list);
-
+        
         db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").get()
             .then(snapshot => {
                 snapshot.docs.map((value) => {
                     
                     // console.log(templistCheck,templist,input);
                     // console.log(activeId,"id",value.data().id);
-                    value.data().id === activeId+1 ?
+                    value.data().id === activeId ?
                     db.collection("users").doc('iNIR1xqLjNNqpzMkuRJO').collection("listNames").doc(value.id).update({
                         list : templist,
                         listCheck : templistCheck
@@ -82,6 +138,12 @@ class Detail extends Component{
         this.props.changeFunction();
     }
 
+    handleKeyPress = (event) => {
+        // console.log("neter");
+        if(event.key === 'Enter'){
+            this.addListTodos()
+        }
+      }
 
     render()
     {
@@ -92,7 +154,7 @@ class Detail extends Component{
             if(items.active){
                 return items.list.map((item)=>{
                     index += 1;
-                    return <DetailItem texts={item} key={index} isChecked={items.listCheck[index-1]}/>
+                    return <DetailItem deleteCheckedListItem={this.deleteCheckedlist} changeChecked={this.changeCheckedlist} texts={item} ind={index-1} key={index-1} isChecked={items.listCheck[index-1]}/>
                 })
             }
         }))
@@ -121,12 +183,14 @@ class Detail extends Component{
                                 // onKeyPress={this.add}
                                 // onChange={(event) => this.storeListName(event)}  
                                 // value={this.state.val}  
+                                onKeyPress={this.handleKeyPress}
                                 placeholder="Unanmed List"
                         />
                     </div>
                     <div className="details__submitIcon">
                         <BookSharpIcon  
                                 onClick={this.addListTodos} 
+                                
                                 // style={this.state.styl}
                         />
                         {/* <BookmarkBorderSharpIcon/> */}
